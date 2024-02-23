@@ -5,9 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.retry.annotation.Backoff
 import org.springframework.retry.annotation.Retryable
 import org.springframework.web.bind.annotation.*
+import ru.donorsearch.model.dto.auth.*
 import ru.donorsearch.model.dto.event.EventDto
-import ru.donorsearch.model.dto.auth.RegisterDto
-import ru.donorsearch.model.dto.auth.UserDto
 import ru.donorsearch.model.dto.bloodstation.BloodStationDto
 import ru.donorsearch.model.dto.bloodstation.BloodStationUsersDto
 import ru.donorsearch.model.dto.bloodstation.BloodStationsDto
@@ -23,10 +22,10 @@ import ru.donorsearch.model.dto.donation.DonationPlanDto
 interface HackatonFeignClient {
 
     @PostMapping("/auth/registration")
-    fun register(@RequestBody registerDto: RegisterDto): UserDto
+    fun register(@RequestBody registerDto: RegisterDto?): UserDto?
 
     @GetMapping("/blood_stations/{id}")
-    fun getBloodStation(@PathVariable("id") id: Int): BloodStationDto
+    fun getBloodStation(@PathVariable("id") id: Int): BloodStationDto?
 
     @GetMapping("/blood_stations", consumes = ["application/json"])
     fun getBloodStations(
@@ -77,4 +76,28 @@ interface HackatonFeignClient {
 
     @GetMapping("/{id}")
     fun getEvent(@PathVariable("id") id: Int?): EventDto?
+
+    @PostMapping("/change_email")
+    fun changeEmail(@RequestBody emailDto: EmailDto?): StatusDto?
+
+    @PostMapping("/change_password")
+    fun changePassword(@RequestBody passwordDto: PasswordDto?): FullUserDto?
+
+    @PostMapping("/change_phone")
+    fun changePhone(@RequestBody phoneDto: PhoneDto?): StatusDto?
+
+    @PostMapping("/confirm_email")
+    fun confirmEmail(@RequestBody emailDto: ConfirmEmailDto?): StatusDto?
+
+    @PostMapping("/confirm_phone")
+    fun confirmPhone(@RequestBody phoneDto: PhoneDto?): StatusDto?
+
+    @PostMapping("/login")
+    fun login(@RequestBody loginDto: LoginDto?): FullUserDto?
+
+    @GetMapping("/me")
+    fun getCurrentUser(): FullUserDto?
+
+    @PatchMapping("/me")
+    fun updateCurrentUser(@RequestBody userDto: FullUserDto?): FullUserDto?
 }

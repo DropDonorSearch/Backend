@@ -15,9 +15,8 @@ class BloodStationController(
 ) {
 
     @GetMapping("/{id}")
-    fun getBloodStation(@PathVariable("id") id: Int): BloodStationDto {
-        val station: BloodStationDto = hackatonFeignClient.getBloodStation(id)
-        return station
+    fun getBloodStation(@PathVariable("id") id: Int): BloodStationDto? {
+        return hackatonFeignClient.getBloodStation(id)
     }
 
     @GetMapping
