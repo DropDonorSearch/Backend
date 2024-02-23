@@ -1,6 +1,7 @@
 package ru.donorsearch.feign
 
 import feign.FeignException
+import feign.Headers
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.retry.annotation.Backoff
 import org.springframework.retry.annotation.Retryable
@@ -19,6 +20,7 @@ import ru.donorsearch.model.dto.donation.DonationPlanDto
     backoff = Backoff(delayExpression = "\${external-service.retry.delay}")
 )
 @FeignClient(name = "hackaton", url = "\${client.hackathon}")
+@Headers("Authorization: Basic {requester}")
 interface HackatonFeignClient {
 
     @PostMapping("/auth/registration")
