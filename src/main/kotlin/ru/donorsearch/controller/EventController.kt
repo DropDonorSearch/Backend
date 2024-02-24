@@ -40,12 +40,12 @@ class EventController(
 
         if (eventsDto?.next != null) {
             val index = eventsDto.next!!.indexOf("/api")
-            eventsDto.next = eventsDto.next!!.substring(index)
+            eventsDto.next = eventsDto.next!!.substring(index + 4)
         }
 
         if (eventsDto?.previous != null) {
             val index = eventsDto.previous!!.indexOf("/api")
-            eventsDto.previous = eventsDto.previous!!.substring(index)
+            eventsDto.previous = eventsDto.previous!!.substring(index + 4)
         }
 
         return eventsDto
