@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor
 import org.springframework.web.bind.annotation.*
 import ru.donorsearch.feign.HackatonFeignClient
 import ru.donorsearch.model.dto.event.EventDto
+import ru.donorsearch.model.dto.event.EventsDto
 
 @RestController
 @RequestMapping("/api/events")
@@ -23,7 +24,7 @@ class EventController(
         @RequestParam("page") page: Int?,
         @RequestParam("page_size") pageSize: Int?,
         @RequestParam("search") search: String?
-    ): List<EventDto?> {
+    ): EventsDto? {
         return hackatonFeignClient.getEvents(
             bloodStation,
             byBloodStation,

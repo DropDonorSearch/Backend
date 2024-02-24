@@ -9,31 +9,22 @@ data class EventDto(
     val city: CityDto?,
     @JsonProperty("city_id")
     val cityId: Int?,
-//    val timeSlots: List<TimeSlotDto>?,
-    val joinedUsers: String?,
-//    val reports: List<ReportDto>?,
-    val author: String?,
-//    val category: CategoryDto?,
-    val userStatus: String?,
+    val author: AuthorDto?,
     val type: String?,
-//    val individualPartners: List<IndividualPartnerDto>?,
-//    val unityPartners: List<UnityPartnerDto>?,
-//    val donorsRequirements: List<DonorsRequirementDto>?,
-    val bloodStation: BloodStationDto?,
-    val availableSlots: String?,
-//    val socialNetworks: List<SocialNetworkDto>?,
-    val createdAt: String?,
-    val updatedAt: String?,
+    @JsonProperty("available_slots")
+    val availableSlots: Int?,
+    @JsonProperty("start_date")
+    val startDate: String?,
+    @JsonProperty("end_date")
+    val endDate: String?,
+    @JsonProperty("object_id")
     val objectId: Int?,
     val name: String?,
     val description: String?,
-    val startDate: String?,
-    val endDate: String?,
     val address: String?,
-    val email: String?,
-    val website: String?,
     val phone: String?,
+    @JsonProperty("joined_count")
     val joinedCount: Int?,
-    val isPrivate: Boolean?,
+    @JsonProperty("content_type")
     val contentType: Int?
 )

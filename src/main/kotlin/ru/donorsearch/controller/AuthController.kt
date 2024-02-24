@@ -13,7 +13,7 @@ class AuthController(
 ) {
 
     @PostMapping("/register")
-    fun register(@RequestBody registerDto: RegisterDto?): UserDto? {
+    fun register(@RequestBody registerDto: RegisterDto): UserDto? {
         return hackatonFeignClient.register(registerDto)
     }
 
@@ -23,37 +23,27 @@ class AuthController(
     }
 
     @PostMapping("/change-password")
-    fun changePassword(
-        @RequestBody passwordDto: PasswordDto?
-    ): FullUserDto? {
+    fun changePassword(@RequestBody passwordDto: PasswordDto?): FullUserDto? {
         return hackatonFeignClient.changePassword(passwordDto)
     }
 
     @PostMapping("/change-phone")
-    fun changePhone(
-        @RequestBody phoneDto: PhoneDto?
-    ): StatusDto? {
+    fun changePhone(@RequestBody phoneDto: PhoneDto?): StatusDto? {
         return hackatonFeignClient.changePhone(phoneDto)
     }
 
     @PostMapping("/confirm-email")
-    fun confirmEmail(
-        @RequestBody emailDto: ConfirmEmailDto?
-    ): StatusDto? {
+    fun confirmEmail(@RequestBody emailDto: ConfirmEmailDto?): StatusDto? {
         return hackatonFeignClient.confirmEmail(emailDto)
     }
 
     @PostMapping("/confirm-phone")
-    fun confirmPhone(
-        @RequestBody phoneDto: PhoneDto?
-    ): StatusDto? {
+    fun confirmPhone(@RequestBody phoneDto: PhoneDto?): StatusDto? {
         return hackatonFeignClient.confirmPhone(phoneDto)
     }
 
     @PostMapping("/login")
-    fun login(
-        @RequestBody loginDto: LoginDto?
-    ): FullUserDto? {
+    fun login(@RequestBody loginDto: LoginDto?): FullUserDto? {
         return hackatonFeignClient.login(loginDto)
     }
 

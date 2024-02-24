@@ -2,6 +2,7 @@ package ru.donorsearch.feign
 
 import feign.FeignException
 import feign.Headers
+import feign.RequestLine
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.retry.annotation.Backoff
 import org.springframework.retry.annotation.Retryable
@@ -12,6 +13,7 @@ import ru.donorsearch.model.dto.bloodstation.BloodStationDto
 import ru.donorsearch.model.dto.bloodstation.BloodStationUsersDto
 import ru.donorsearch.model.dto.bloodstation.BloodStationsDto
 import ru.donorsearch.model.dto.donation.DonationPlanDto
+import ru.donorsearch.model.dto.event.EventsDto
 
 @Retryable(
     exclude = [FeignException.InternalServerError::class, FeignException.BadRequest::class
@@ -23,13 +25,13 @@ import ru.donorsearch.model.dto.donation.DonationPlanDto
 @Headers("Authorization: Basic {requester}")
 interface HackatonFeignClient {
 
-    @PostMapping("/auth/registration")
-    fun register(@RequestBody registerDto: RegisterDto?): UserDto?
+    @PostMapping("/auth/registration/")
+    fun register(@RequestBody(required = true) registerDto: RegisterDto): UserDto?
 
-    @GetMapping("/blood_stations/{id}")
+    @GetMapping("/blood_stations/{id}/")
     fun getBloodStation(@PathVariable("id") id: Int): BloodStationDto?
 
-    @GetMapping("/blood_stations", consumes = ["application/json"])
+    @GetMapping("/blood_stations/", consumes = ["application/json"])
     fun getBloodStations(
         @RequestParam("blood_group") bloodGroup: String?,
         @RequestParam("city_id") cityId: Int?,
@@ -47,13 +49,13 @@ interface HackatonFeignClient {
         @RequestParam("status") status: String?
     ): BloodStationsDto?
 
-    @GetMapping("/blood_stations/{id}/planned")
+    @GetMapping("/blood_stations/{id}/planned/")
     fun getUsersWithPlannedDonations(@PathVariable id: Int?): BloodStationUsersDto?
 
-    @GetMapping("/donation_plan/{id}")
+    @GetMapping("/donation_plan/{id}/")
     fun getDonationPlan(@PathVariable("id") id: Int?): DonationPlanDto?
 
-    @GetMapping("/donation_plan")
+    @GetMapping("/donation_plan/")
     fun getDonationPlans(
         @RequestParam("donate_at__gte") donateAtGte: String?,
         @RequestParam("ordering") ordering: String?,
@@ -63,7 +65,7 @@ interface HackatonFeignClient {
         @RequestParam("status") status: String?
     ): List<DonationPlanDto>
 
-    @GetMapping
+    @GetMapping("/events/")
     fun getEvents(
         @RequestParam("blood_station") bloodStation: Int?,
         @RequestParam("by_blood_station") byBloodStation: String?,
@@ -74,32 +76,32 @@ interface HackatonFeignClient {
         @RequestParam("page") page: Int?,
         @RequestParam("page_size") pageSize: Int?,
         @RequestParam("search") search: String?
-    ): List<EventDto?>
+    ): EventsDto?
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/")
     fun getEvent(@PathVariable("id") id: Int?): EventDto?
 
-    @PostMapping("/change_email")
+    @PostMapping("auth/change_email/")
     fun changeEmail(@RequestBody emailDto: EmailDto?): StatusDto?
 
-    @PostMapping("/change_password")
+    @PostMapping("/change_password/")
     fun changePassword(@RequestBody passwordDto: PasswordDto?): FullUserDto?
 
-    @PostMapping("/change_phone")
+    @PostMapping("/change_phone/")
     fun changePhone(@RequestBody phoneDto: PhoneDto?): StatusDto?
 
-    @PostMapping("/confirm_email")
+    @PostMapping("/confirm_email/")
     fun confirmEmail(@RequestBody emailDto: ConfirmEmailDto?): StatusDto?
 
-    @PostMapping("/confirm_phone")
+    @PostMapping("/confirm_phone/")
     fun confirmPhone(@RequestBody phoneDto: PhoneDto?): StatusDto?
 
-    @PostMapping("/login")
+    @PostMapping("/login/")
     fun login(@RequestBody loginDto: LoginDto?): FullUserDto?
 
-    @GetMapping("/me")
+    @GetMapping("/me/")
     fun getCurrentUser(): FullUserDto?
 
-    @PatchMapping("/me")
+    @PatchMapping("/me/")
     fun updateCurrentUser(@RequestBody userDto: FullUserDto?): FullUserDto?
 }
