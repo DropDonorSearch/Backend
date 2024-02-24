@@ -1,4 +1,4 @@
-package ru.donorsearch.model.dto.donation
+package ru.donorsearch.model.dto.donationplan
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import ru.donorsearch.model.dto.bloodstation.BloodStationDto

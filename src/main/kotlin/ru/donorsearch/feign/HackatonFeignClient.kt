@@ -2,7 +2,6 @@ package ru.donorsearch.feign
 
 import feign.FeignException
 import feign.Headers
-import feign.RequestLine
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.retry.annotation.Backoff
 import org.springframework.retry.annotation.Retryable
@@ -12,7 +11,9 @@ import ru.donorsearch.model.dto.event.EventDto
 import ru.donorsearch.model.dto.bloodstation.BloodStationDto
 import ru.donorsearch.model.dto.bloodstation.BloodStationUsersDto
 import ru.donorsearch.model.dto.bloodstation.BloodStationsDto
-import ru.donorsearch.model.dto.donation.DonationPlanDto
+import ru.donorsearch.model.dto.donation.DonationDto
+import ru.donorsearch.model.dto.donation.DonationDtoWithPaging
+import ru.donorsearch.model.dto.donationplan.DonationPlanDto
 import ru.donorsearch.model.dto.event.EventsDto
 
 @Retryable(
@@ -104,4 +105,23 @@ interface HackatonFeignClient {
 
     @PatchMapping("/me/")
     fun updateCurrentUser(@RequestBody userDto: FullUserDto?): FullUserDto?
+
+    @GetMapping("/donations/")
+    fun getDonations(
+        @RequestParam("donate_at__gte") donateAtGte: String?,
+        @RequestParam("ordering") ordering: String?,
+        @RequestParam("page") page: Int?,
+        @RequestParam("page_size") pageSize: Int?,
+        @RequestParam("search") search: String?,
+        @RequestParam("status") status: String?
+    ): DonationDtoWithPaging
+
+    @PostMapping("/donations/")
+    fun createDonation(
+        @RequestBody donation: DonationDto?
+    ) : DonationDto
+
+//    TODO: modify donation dto for this call
+    @GetMapping("/donations/{id}")
+    fun getDonation(@PathVariable("id") id: Int): DonationDto?
 }

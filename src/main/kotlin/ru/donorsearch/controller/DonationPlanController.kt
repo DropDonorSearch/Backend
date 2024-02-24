@@ -3,7 +3,7 @@ package ru.donorsearch.controller
 import lombok.RequiredArgsConstructor
 import org.springframework.web.bind.annotation.*
 import ru.donorsearch.feign.HackatonFeignClient
-import ru.donorsearch.model.dto.donation.DonationPlanDto
+import ru.donorsearch.model.dto.donationplan.DonationPlanDto
 
 @RestController
 @RequestMapping("/api/donation-plan")
