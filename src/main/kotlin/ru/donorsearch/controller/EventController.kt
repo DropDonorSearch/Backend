@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*
 import ru.donorsearch.feign.HackatonFeignClient
 import ru.donorsearch.model.dto.event.EventDto
 import ru.donorsearch.model.dto.event.EventsDto
-import java.net.URI
 
 @RestController
 @RequestMapping("/api/events")
@@ -40,14 +39,15 @@ class EventController(
         )
 
         if (eventsDto?.next != null) {
-            val uri = URI(eventsDto.next!!)
-            // Удаление сегмента `/api` из пути
-            eventsDto.next = uri.path.replace("/api", "")
+            val index = eventsDto.next!!.indexOf("/api")
+            val indexOf = eventsDto.next!!.indexOf("/?")
+
+            eventsDto.next = eventsDto.next!!.substring(index + 4).replace("/?", "?")
         }
 
         if (eventsDto?.previous != null) {
             val index = eventsDto.previous!!.indexOf("/api")
-            eventsDto.previous = eventsDto.previous!!.substring(index + 4, eventsDto.next!!.lastIndex - 1)
+            eventsDto.previous = eventsDto.previous!!.substring(index + 4).replace("/?", "?")
         }
 
         return eventsDto
