@@ -26,8 +26,11 @@ class DonationPlanController(
     }
 
     @PostMapping
-    fun createDonationPlan(@RequestBody donation: DonationPlanDto?): DonationPlanDto? {
-        return null
+    fun createDonationPlan(
+        @RequestHeader("Authorization") basicToken: String,
+        @RequestBody donation: DonationPlanDto?
+    ): DonationPlanDto? {
+        return hackatonFeignClient.createDonationPlan(basicToken, donation)
     }
 
     @GetMapping("/{id}")
