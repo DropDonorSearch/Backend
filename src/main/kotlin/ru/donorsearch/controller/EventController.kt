@@ -25,7 +25,8 @@ class EventController(
         @RequestParam("page_size") pageSize: Int?,
         @RequestParam("search") search: String?
     ): EventsDto? {
-        return hackatonFeignClient.getEvents(
+
+        val eventsDto: EventsDto? = hackatonFeignClient.getEvents(
             bloodStation,
             byBloodStation,
             byDate,
@@ -36,6 +37,18 @@ class EventController(
             pageSize,
             search
         )
+
+        if (eventsDto?.next != null) {
+            val index = eventsDto.next!!.indexOf("/api")
+            eventsDto.next = eventsDto.next!!.substring(index)
+        }
+
+        if (eventsDto?.previous != null) {
+            val index = eventsDto.previous!!.indexOf("/api")
+            eventsDto.previous = eventsDto.previous!!.substring(index)
+        }
+
+        return eventsDto
     }
 
     @GetMapping("/{id}")

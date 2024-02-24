@@ -18,13 +18,13 @@ import ru.donorsearch.model.dto.event.EventsDto
 import ru.donorsearch.model.dto.region.CitiesDto
 
 @Retryable(
-    exclude = [FeignException.InternalServerError::class, FeignException.BadRequest::class
+    exclude = [FeignException.InternalServerError::class, FeignException.BadRequest::class,
+//        FeignException.Unauthorized::class
     ],
-    maxAttemptsExpression = "\${external-service.retry.attempts}",
-    backoff = Backoff(delayExpression = "\${external-service.retry.delay}")
+    maxAttemptsExpression = "3",
+    backoff = Backoff(delayExpression = "3000")
 )
 @FeignClient(name = "hackaton", url = "\${client.hackathon}")
-@Headers("Authorization: Basic {requester}")
 interface HackatonFeignClient {
 
     @PostMapping("/auth/registration/")
@@ -105,18 +105,24 @@ interface HackatonFeignClient {
     fun getEvent(@PathVariable("id") id: Int?): EventDto?
 
     @PostMapping("/auth/change_email/")
-    fun changeEmail(@RequestBody emailDto: EmailDto?): StatusDto?
+    fun changeEmail(
+        @RequestHeader("Authorization") basicToken: String,
+        @RequestBody emailDto: EmailDto?
+    ): StatusDto?
 
     @PostMapping("/change_password/")
     fun changePassword(@RequestBody passwordDto: PasswordDto?): FullUserDto?
 
-    @PostMapping("/change_phone/")
+    @PostMapping("/auth/change_phone/")
     fun changePhone(@RequestBody phoneDto: PhoneDto?): StatusDto?
 
-    @PostMapping("/confirm_email/")
-    fun confirmEmail(@RequestBody emailDto: ConfirmEmailDto?): StatusDto?
+    @PostMapping("/auth/confirm_email/")
+    fun confirmEmail(
+        @RequestHeader("Authorization") basicToken: String,
+        @RequestBody emailDto: ConfirmEmailDto?
+    ): StatusDto?
 
-    @PostMapping("/confirm_phone/")
+    @PostMapping("/auth/confirm_phone/")
     fun confirmPhone(@RequestBody phoneDto: PhoneDto?): StatusDto?
 
     @PostMapping("/auth/login/")
@@ -163,14 +169,14 @@ interface HackatonFeignClient {
         @PathVariable("id") id: Int
     ): DonationDto?
 
-    @PatchMapping("donations/{id}/")
+    @PatchMapping("/donations/{id}/")
     fun patchDonation(
         @RequestHeader("Authorization") basicToken: String,
         @PathVariable("id") id: Int,
         @RequestBody donation: DonationDto?
     ): DonationDto?
 
-    @PutMapping("donations/{id}/")
+    @PutMapping("/donations/{id}/")
     fun putDonation(
         @RequestHeader("Authorization") basicToken: String,
         @PathVariable("id") id: Int,
