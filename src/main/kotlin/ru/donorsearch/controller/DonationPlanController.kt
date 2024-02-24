@@ -14,6 +14,7 @@ class DonationPlanController(
 
     @GetMapping
     fun getDonationPlans(
+        @RequestHeader("Authorization") basicToken: String,
         @RequestParam("donate_at__gte") donateAtGte: String?,
         @RequestParam("ordering") ordering: String?,
         @RequestParam("page") page: Int?,
@@ -21,7 +22,7 @@ class DonationPlanController(
         @RequestParam("search") search: String?,
         @RequestParam("status") status: String?
     ): List<DonationPlanDto?> {
-        return hackatonFeignClient.getDonationPlans(donateAtGte, ordering, page, pageSize, search, status)
+        return hackatonFeignClient.getDonationPlans(basicToken, donateAtGte, ordering, page, pageSize, search, status)
     }
 
     @PostMapping
@@ -32,10 +33,5 @@ class DonationPlanController(
     @GetMapping("/{id}")
     fun getDonationPlan(@PathVariable("id") id: Int?): DonationPlanDto? {
         return hackatonFeignClient.getDonationPlan(id)
-    }
-
-    @DeleteMapping("/{id}")
-    fun deleteDonationPlan(@PathVariable("id") id: Int?) {
-
     }
 }

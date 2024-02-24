@@ -21,7 +21,8 @@ class DonationController(
         @RequestParam("search") search: String?,
         @RequestParam("status") status: String?
     ): List<DonationPlanDto?> {
-        return hackatonFeignClient.getDonationPlans(donateAtGte, ordering, page, pageSize, search, status)
+//        return hackatonFeignClient.getDonationPlans(donateAtGte, ordering, page, pageSize, search, status)
+        return emptyList()
     }
 
     @PostMapping
@@ -39,7 +40,7 @@ class DonationController(
 
     }
 
-    @GetMapping("/is-exists/")
+    @GetMapping("/is-exists")
     fun checkDonationExistsOnDate(@RequestParam("date") date: String?): Boolean? {
         return true
     }

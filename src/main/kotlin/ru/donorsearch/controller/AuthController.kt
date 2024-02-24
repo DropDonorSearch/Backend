@@ -17,6 +17,11 @@ class AuthController(
         return hackatonFeignClient.register(registerDto)
     }
 
+    @PostMapping("/login")
+    fun login(@RequestBody loginDto: LoginDto?): FullUserDto? {
+        return hackatonFeignClient.login(loginDto)
+    }
+
     @PostMapping("/change-email")
     fun changeEmail(@RequestBody emailDto: EmailDto?): StatusDto? {
         return hackatonFeignClient.changeEmail(emailDto)
@@ -42,14 +47,9 @@ class AuthController(
         return hackatonFeignClient.confirmPhone(phoneDto)
     }
 
-    @PostMapping("/login")
-    fun login(@RequestBody loginDto: LoginDto?): FullUserDto? {
-        return hackatonFeignClient.login(loginDto)
-    }
-
     @GetMapping("/me")
-    fun getCurrentUser(): FullUserDto? {
-        return hackatonFeignClient.getCurrentUser()
+    fun getCurrentUser(@RequestHeader("Authorization") basicToken: String): FullUserDto? {
+        return hackatonFeignClient.getCurrentUser(basicToken)
     }
 
     @PatchMapping("/me")
