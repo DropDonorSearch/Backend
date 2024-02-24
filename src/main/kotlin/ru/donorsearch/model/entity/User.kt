@@ -4,12 +4,11 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "user", schema = "task_manager")
+@Table(name = "user", schema = "donor_search")
 open class User(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    open var id: Long? = null,
+    @Column(name = "external_id")
+    open var externalId: Long? = null,
 
     @Column(name = "firstname")
     open var firstname: String? = null,
@@ -18,7 +17,7 @@ open class User(
     open var lastname: String? = null,
 
     @Column(name = "username")
-    open var username: String,
+    open var username: String?,
 
     @Column(name = "email")
     open var email: String,

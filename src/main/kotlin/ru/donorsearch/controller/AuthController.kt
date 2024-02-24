@@ -4,17 +4,24 @@ import lombok.RequiredArgsConstructor
 import org.springframework.web.bind.annotation.*
 import ru.donorsearch.feign.HackatonFeignClient
 import ru.donorsearch.model.dto.auth.*
+import ru.donorsearch.model.dto.user.InternalUserDto
+import ru.donorsearch.service.UserService
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 class AuthController(
-    private val hackatonFeignClient: HackatonFeignClient
+    private val hackatonFeignClient: HackatonFeignClient,
+    private val userService: UserService
 ) {
 
     @PostMapping("/register")
     fun register(@RequestBody registerDto: RegisterDto): UserDto? {
-        return hackatonFeignClient.register(registerDto)
+        val userDto = hackatonFeignClient.register(registerDto)
+        val internalUserDto = InternalUserDto(userDto?.userId, registerDto.firstName, null, null, registerDto.email, registerDto.password)
+        userService.createUser(internalUserDto)
+
+        return userDto
     }
 
     @PostMapping("/login")
