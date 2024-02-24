@@ -65,8 +65,9 @@ class AuthController(
     @OptIn(ExperimentalEncodingApi::class)
     @GetMapping("/me")
     fun getCurrentUser(@CookieValue("token") basicToken: String): FullUserDto? {
-        val rtest = String(Base64.decode(basicToken))
-        return hackatonFeignClient.getCurrentUser(basicToken)
+        val decodeString = String(Base64.decode(basicToken))
+        decodeString.split("\":\"")
+        return hackatonFeignClient.getCurrentUser("Basic $basicToken")
     }
 
     @PatchMapping("/me")
