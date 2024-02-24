@@ -4,7 +4,7 @@ import ru.donorsearch.model.entity.enums.SpecialProjectStatusEnum
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class SpecialProjectDto (
+data class SpecialProjectDto (
     var specialProjectId: Long?,
     var imageUrl: String,
     var status: SpecialProjectStatusEnum = SpecialProjectStatusEnum.ONLINE,
