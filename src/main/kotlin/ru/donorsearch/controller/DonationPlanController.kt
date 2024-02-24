@@ -37,4 +37,22 @@ class DonationPlanController(
     fun getDonationPlan(@PathVariable("id") id: Int?): DonationPlanDto? {
         return hackatonFeignClient.getDonationPlan(id)
     }
+
+    @PatchMapping("/{id}")
+    fun patchDonationPlan(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int,
+        @RequestBody donationPlan: DonationPlanDto
+    ): DonationPlanDto? {
+        return hackatonFeignClient.patchDonationPlan(basicToken, id, donationPlan)
+    }
+
+    @PutMapping("/{id}")
+    fun putDonationPlan(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int,
+        @RequestBody donationPlan: DonationPlanDto
+    ): DonationPlanDto? {
+        return hackatonFeignClient.putDonationPlan(basicToken, id, donationPlan)
+    }
 }

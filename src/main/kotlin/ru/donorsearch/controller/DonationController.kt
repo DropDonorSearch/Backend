@@ -43,6 +43,24 @@ class DonationController(
         return hackatonFeignClient.getDonation(basicToken, id)
     }
 
+    @PatchMapping("/{id}")
+    fun patchDonation(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int,
+        @RequestBody donation: DonationDto
+    ): DonationDto? {
+        return hackatonFeignClient.patchDonation(basicToken, id, donation)
+    }
+
+    @PutMapping("/{id}")
+    fun putDonation(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int,
+        @RequestBody donation: DonationDto
+    ): DonationDto? {
+        return hackatonFeignClient.putDonation(basicToken, id, donation)
+    }
+
     @DeleteMapping("/{id}")
     fun deleteDonation(@PathVariable("id") id: Int?) {
         return

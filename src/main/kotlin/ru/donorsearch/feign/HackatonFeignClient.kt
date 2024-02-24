@@ -74,6 +74,20 @@ interface HackatonFeignClient {
         @RequestBody donation: DonationPlanDto?
     ): DonationPlanDto
 
+    @PatchMapping("/donation_plan/{id}/")
+    fun patchDonationPlan(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int,
+        @RequestBody donation: DonationPlanDto?
+    ): DonationPlanDto?
+
+    @PutMapping("/donation_plan/{id}/")
+    fun putDonationPlan(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int,
+        @RequestBody donation: DonationPlanDto?
+    ): DonationPlanDto?
+
     @GetMapping("/events/")
     fun getEvents(
         @RequestParam("blood_station") bloodStation: Int?,
@@ -143,10 +157,23 @@ interface HackatonFeignClient {
         @RequestBody donation: DonationDto?
     ): DonationDto
 
-
-    @GetMapping("/donations/{id}")
+    @GetMapping("/donations/{id}/")
     fun getDonation(
         @RequestHeader("Authorization") basicToken: String,
         @PathVariable("id") id: Int
+    ): DonationDto?
+
+    @PatchMapping("donations/{id}/")
+    fun patchDonation(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int,
+        @RequestBody donation: DonationDto?
+    ): DonationDto?
+
+    @PutMapping("donations/{id}/")
+    fun putDonation(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int,
+        @RequestBody donation: DonationDto?
     ): DonationDto?
 }
