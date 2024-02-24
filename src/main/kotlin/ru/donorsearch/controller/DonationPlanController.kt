@@ -14,7 +14,7 @@ class DonationPlanController(
 
     @GetMapping
     fun getDonationPlans(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @RequestParam("donate_at__gte") donateAtGte: String?,
         @RequestParam("ordering") ordering: String?,
         @RequestParam("page") page: Int?,
@@ -27,7 +27,7 @@ class DonationPlanController(
 
     @PostMapping
     fun createDonationPlan(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @RequestBody donation: DonationPlanDto?
     ): DonationPlanDto? {
         return hackatonFeignClient.createDonationPlan(basicToken, donation)
@@ -40,7 +40,7 @@ class DonationPlanController(
 
     @PatchMapping("/{id}")
     fun patchDonationPlan(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @PathVariable("id") id: Int,
         @RequestBody donationPlan: DonationPlanDto
     ): DonationPlanDto? {
@@ -49,7 +49,7 @@ class DonationPlanController(
 
     @PutMapping("/{id}")
     fun putDonationPlan(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @PathVariable("id") id: Int,
         @RequestBody donationPlan: DonationPlanDto
     ): DonationPlanDto? {

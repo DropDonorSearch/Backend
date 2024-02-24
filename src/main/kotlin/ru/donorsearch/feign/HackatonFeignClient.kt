@@ -116,8 +116,8 @@ interface HackatonFeignClient {
     @PostMapping("/auth/change_phone/")
     fun changePhone(@RequestBody phoneDto: PhoneDto?): StatusDto?
 
-    @PostMapping("/auth/confirm_email/")
-    fun confirmEmail(
+    @PostMapping("/auth/confirm_email_reg/")
+    fun confirmEmailReg(
         @RequestHeader("Authorization") basicToken: String,
         @RequestBody emailDto: ConfirmEmailDto?
     ): StatusDto?

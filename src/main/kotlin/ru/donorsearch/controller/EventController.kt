@@ -40,8 +40,6 @@ class EventController(
 
         if (eventsDto?.next != null) {
             val index = eventsDto.next!!.indexOf("/api")
-            val indexOf = eventsDto.next!!.indexOf("/?")
-
             eventsDto.next = eventsDto.next!!.substring(index + 4).replace("/?", "?")
         }
 
