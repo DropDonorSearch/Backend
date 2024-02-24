@@ -122,6 +122,7 @@ interface HackatonFeignClient {
 
     @GetMapping("/donations/")
     fun getDonations(
+        @RequestHeader("Authorization") basicToken: String,
         @RequestParam("donate_at__gte") donateAtGte: String?,
         @RequestParam("ordering") ordering: String?,
         @RequestParam("page") page: Int?,
@@ -132,10 +133,14 @@ interface HackatonFeignClient {
 
     @PostMapping("/donations/")
     fun createDonation(
+        @RequestHeader("Authorization") basicToken: String,
         @RequestBody donation: DonationDto?
-    ) : DonationDto
+    ): DonationDto
 
 
     @GetMapping("/donations/{id}")
-    fun getDonation(@PathVariable("id") id: Int): DonationDto?
+    fun getDonation(
+        @RequestHeader("Authorization") basicToken: String,
+        @PathVariable("id") id: Int
+    ): DonationDto?
 }
