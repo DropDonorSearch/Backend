@@ -135,7 +135,7 @@ interface HackatonFeignClient {
         @RequestBody donation: DonationDto?
     ) : DonationDto
 
-//    TODO: modify donation dto for this call
+
     @GetMapping("/donations/{id}")
     fun getDonation(@PathVariable("id") id: Int): DonationDto?
 }
