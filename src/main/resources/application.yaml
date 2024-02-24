@@ -17,6 +17,9 @@ spring:
     change-log: classpath:db/changelog/Changelog.xml
     user: postgres
     password: Alex1234
+  web:
+    resources:
+      static-locations: classpath:/media/
 
 feign:
   client.config.default:
