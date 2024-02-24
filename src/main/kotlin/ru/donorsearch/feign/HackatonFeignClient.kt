@@ -68,6 +68,11 @@ interface HackatonFeignClient {
         @RequestParam("status") status: String?
     ): List<DonationPlanDto?>
 
+    @PostMapping("/donation_plan/")
+    fun createDonationPlan(
+        @RequestBody donation: DonationPlanDto?
+    ): DonationPlanDto
+
     @GetMapping("/events/")
     fun getEvents(
         @RequestParam("blood_station") bloodStation: Int?,
