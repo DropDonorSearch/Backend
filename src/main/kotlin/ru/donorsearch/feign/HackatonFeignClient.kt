@@ -70,6 +70,7 @@ interface HackatonFeignClient {
 
     @PostMapping("/donation_plan/")
     fun createDonationPlan(
+        @RequestHeader("Authorization") basicToken: String,
         @RequestBody donation: DonationPlanDto?
     ): DonationPlanDto
 
