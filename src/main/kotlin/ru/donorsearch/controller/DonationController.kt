@@ -16,7 +16,7 @@ class DonationController(
 
     @GetMapping
     fun getDonations(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @RequestParam("donate_at__gte") donateAtGte: String?,
         @RequestParam("ordering") ordering: String?,
         @RequestParam("page") page: Int?,
@@ -29,7 +29,7 @@ class DonationController(
 
     @PostMapping
     fun createDonation(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @RequestBody donation: DonationDto?
     ): DonationDto? {
         return hackatonFeignClient.createDonation(basicToken, donation)
@@ -37,7 +37,7 @@ class DonationController(
 
     @GetMapping("/{id}")
     fun getDonation(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @PathVariable("id") id: Int
     ): DonationDto? {
         return hackatonFeignClient.getDonation(basicToken, id)
@@ -45,7 +45,7 @@ class DonationController(
 
     @PatchMapping("/{id}")
     fun patchDonation(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @PathVariable("id") id: Int,
         @RequestBody donation: DonationDto
     ): DonationDto? {
@@ -54,7 +54,7 @@ class DonationController(
 
     @PutMapping("/{id}")
     fun putDonation(
-        @RequestHeader("Authorization") basicToken: String,
+        @CookieValue("token") basicToken: String,
         @PathVariable("id") id: Int,
         @RequestBody donation: DonationDto
     ): DonationDto? {
