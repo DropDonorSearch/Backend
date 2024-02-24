@@ -15,6 +15,7 @@ import ru.donorsearch.model.dto.donation.DonationDto
 import ru.donorsearch.model.dto.donation.DonationDtoWithPaging
 import ru.donorsearch.model.dto.donationplan.DonationPlanDto
 import ru.donorsearch.model.dto.event.EventsDto
+import ru.donorsearch.model.dto.region.CitiesDto
 
 @Retryable(
     exclude = [FeignException.InternalServerError::class, FeignException.BadRequest::class
@@ -58,13 +59,14 @@ interface HackatonFeignClient {
 
     @GetMapping("/donation_plan/")
     fun getDonationPlans(
+        @RequestHeader("Authorization") basicToken: String,
         @RequestParam("donate_at__gte") donateAtGte: String?,
         @RequestParam("ordering") ordering: String?,
         @RequestParam("page") page: Int?,
         @RequestParam("page_size") pageSize: Int?,
         @RequestParam("search") search: String?,
         @RequestParam("status") status: String?
-    ): List<DonationPlanDto>
+    ): List<DonationPlanDto?>
 
     @GetMapping("/events/")
     fun getEvents(
@@ -82,7 +84,7 @@ interface HackatonFeignClient {
     @GetMapping("/{id}/")
     fun getEvent(@PathVariable("id") id: Int?): EventDto?
 
-    @PostMapping("auth/change_email/")
+    @PostMapping("/auth/change_email/")
     fun changeEmail(@RequestBody emailDto: EmailDto?): StatusDto?
 
     @PostMapping("/change_password/")
@@ -97,14 +99,26 @@ interface HackatonFeignClient {
     @PostMapping("/confirm_phone/")
     fun confirmPhone(@RequestBody phoneDto: PhoneDto?): StatusDto?
 
-    @PostMapping("/login/")
+    @PostMapping("/auth/login/")
     fun login(@RequestBody loginDto: LoginDto?): FullUserDto?
 
-    @GetMapping("/me/")
-    fun getCurrentUser(): FullUserDto?
+    @GetMapping("/auth/me/")
+    fun getCurrentUser(@RequestHeader("Authorization") basicToken: String): FullUserDto?
 
     @PatchMapping("/me/")
     fun updateCurrentUser(@RequestBody userDto: FullUserDto?): FullUserDto?
+
+    @GetMapping("/cities/")
+    fun getCities(
+        @RequestParam("all_bs") allBloodStations: Boolean?,
+        @RequestParam("country") country: Int?,
+        @RequestParam("ordering") ordering: String?,
+        @RequestParam("page") page: Int?,
+        @RequestParam("page_size") pageSize: Int?,
+        @RequestParam("region") region: Int?,
+        @RequestParam("s") search: String?,
+        @RequestParam("with_bs") withBloodStations: Boolean?
+    ): CitiesDto?
 
     @GetMapping("/donations/")
     fun getDonations(

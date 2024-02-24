@@ -41,7 +41,7 @@ class DonationController(
         return
     }
 
-    @GetMapping("/is-exists/")
+    @GetMapping("/is-exists")
     fun checkDonationExistsOnDate(@RequestParam("date") date: String?): Boolean? {
         return true
     }

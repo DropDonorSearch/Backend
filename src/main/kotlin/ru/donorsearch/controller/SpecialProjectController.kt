@@ -10,11 +10,11 @@ import ru.donorsearch.service.SpecialProjectService
 @RestController
 @RequestMapping("/api/special-projects")
 @RequiredArgsConstructor
-class SpecialProjectController (
+class SpecialProjectController(
     private val specialProjectService: SpecialProjectService
 ) {
 
-    @GetMapping("/all")
+    @GetMapping
     fun getAllSpecialProjects(): List<SpecialProjectDto> {
         return specialProjectService.getSpecialProjects()
     }
