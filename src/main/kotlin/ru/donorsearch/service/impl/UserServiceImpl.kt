@@ -1,5 +1,6 @@
 package ru.donorsearch.service.impl
 
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import ru.donorsearch.model.dto.user.InternalUserDto
 import ru.donorsearch.model.mapper.UserMapper
@@ -25,10 +26,11 @@ class UserServiceImpl(
         return userMapper.createUserDto(user)
     }
 
+    @Transactional
     override fun updateUser(externalId: Long, internalUserDto: InternalUserDto): InternalUserDto? {
         val existingUser = userRepository.findByExternalId(externalId)
 
-        userMapper.updateUserDto(existingUser, internalUserDto)
+        userRepository.save(userMapper.updateUserDto(existingUser, internalUserDto))
         return userMapper.createUserDto(existingUser)
     }
 }

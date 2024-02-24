@@ -6,6 +6,8 @@ import ru.donorsearch.feign.HackatonFeignClient
 import ru.donorsearch.model.dto.auth.*
 import ru.donorsearch.model.dto.user.InternalUserDto
 import ru.donorsearch.service.UserService
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 @RestController
 @RequestMapping("/api/auth")
@@ -60,8 +62,10 @@ class AuthController(
         return hackatonFeignClient.confirmPhone(phoneDto)
     }
 
+    @OptIn(ExperimentalEncodingApi::class)
     @GetMapping("/me")
-    fun getCurrentUser(@RequestHeader("Authorization") basicToken: String): FullUserDto? {
+    fun getCurrentUser(@CookieValue("token") basicToken: String): FullUserDto? {
+        val rtest = String(Base64.decode(basicToken))
         return hackatonFeignClient.getCurrentUser(basicToken)
     }
 

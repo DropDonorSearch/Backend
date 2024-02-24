@@ -17,7 +17,7 @@ data class InternalUserDto (
     val username: String? = null,
 
     @JsonProperty(value = "email")
-    val email: String,
+    val email: String? = null,
 
     @JsonProperty(value = "password")
     val password: String? = null,
