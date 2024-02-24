@@ -1,0 +1,10 @@
+version: '3.1'
+services:
+  donor_search_db:
+    image: postgres:14
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: donor_search_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Alex1234
