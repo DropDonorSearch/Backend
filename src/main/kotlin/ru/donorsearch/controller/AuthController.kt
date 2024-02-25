@@ -20,7 +20,8 @@ class AuthController(
     @PostMapping("/register")
     fun register(@RequestBody registerDto: RegisterDto): UserDto? {
         val userDto = hackatonFeignClient.register(registerDto)
-        val internalUserDto = InternalUserDto(userDto?.userId, registerDto.firstName, null, null, registerDto.email, registerDto.password)
+        val internalUserDto =
+            InternalUserDto(userDto?.userId, registerDto.firstName, null, null, registerDto.email, registerDto.password)
         userService.createUser(internalUserDto)
 
         return userDto
@@ -68,7 +69,16 @@ class AuthController(
         val decodeString = String(Base64.decode(basicToken))
         val splitEd = decodeString.split(":")
 
-        return hackatonFeignClient.getCurrentUser("Basic $basicToken")
+        val user = userService.getUserByEmail(splitEd[0])
+        val userDto = hackatonFeignClient.getCurrentUser("Basic $basicToken")
+
+        userDto?.gender = user?.gender
+        userDto?.firstName = user?.firstName
+        userDto?.lastName = user?.lastName
+        userDto?.middleName = user?.middleName
+        userDto?.about = user?.about
+
+        return userDto
     }
 
     @PatchMapping("/me")

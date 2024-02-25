@@ -13,10 +13,17 @@ class UserServiceImpl(
     private val userMapper: UserMapper
 ) : UserService {
 
+    override fun getUserByEmail(email: String?): InternalUserDto? {
+        return userMapper.createUserDto(
+            userRepository.findByEmail(email).orElse(null)
+        )
+    }
+
     override fun getUser(externalId: Long): InternalUserDto? {
         return userMapper.createUserDto(
             userRepository.findById(externalId)
-                .orElse(null))
+                .orElse(null)
+        )
     }
 
     override fun createUser(internalUserDto: InternalUserDto): InternalUserDto? {
@@ -28,7 +35,7 @@ class UserServiceImpl(
 
     @Transactional
     override fun updateUser(externalId: Long, internalUserDto: InternalUserDto): InternalUserDto? {
-        val existingUser = userRepository.findByExternalId(externalId)
+        val existingUser = userRepository.findByExternalId(externalId).orElse(null)
 
         userRepository.save(userMapper.updateUserDto(existingUser, internalUserDto))
         return userMapper.createUserDto(existingUser)

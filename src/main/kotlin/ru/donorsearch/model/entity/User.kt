@@ -10,11 +10,14 @@ open class User(
     @Column(name = "external_id")
     open var externalId: Long? = null,
 
-    @Column(name = "firstname")
-    open var firstname: String? = null,
+    @Column(name = "first_name")
+    open var firstName: String? = null,
 
-    @Column(name = "lastname")
-    open var lastname: String? = null,
+    @Column(name = "last_name")
+    open var lastName: String? = null,
+
+    @Column(name = "middle_name")
+    open var middleName: String? = null,
 
     @Column(name = "username")
     open var username: String?,
@@ -24,6 +27,12 @@ open class User(
 
     @Column(name = "password")
     open var password: String? = null,
+
+    @Column(name = "gender")
+    open var gender: String? = null,
+
+    @Column(name = "about")
+    open var about: String? = null,
 
     @Column(name = "created")
     open var created: LocalDateTime?,

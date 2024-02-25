@@ -9,21 +9,21 @@ data class FullUserDto(
     val dateJoined: String?,
     val username: String?,
     @JsonProperty("first_name")
-    val firstName: String?,
+    var firstName: String?,
     @JsonProperty("last_name")
-    val lastName: String?,
+    var lastName: String?,
     @JsonProperty("middle_name")
-    val middleName: String?,
+    var middleName: String?,
     @JsonProperty("maiden_name")
     val maidenName: String?,
     @JsonProperty("birth_date")
     val birthDate: String?,
-    val gender: String?,
+    var gender: String?,
     val email: String?,
     val phone: String?,
     @JsonProperty("login_via_phone")
     val loginViaPhone: Boolean?,
-    val about: String?,
+    var about: String?,
     @JsonProperty("city_id")
     val cityId: Int?,
     val city: CityDto?,
