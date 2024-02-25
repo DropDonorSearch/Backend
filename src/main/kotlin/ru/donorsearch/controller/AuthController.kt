@@ -21,7 +21,15 @@ class AuthController(
     fun register(@RequestBody registerDto: RegisterDto): UserDto? {
         val userDto = hackatonFeignClient.register(registerDto)
         val internalUserDto =
-            InternalUserDto(userDto?.userId, registerDto.firstName, null, null, registerDto.email, registerDto.password)
+            InternalUserDto(
+                userDto?.userId,
+                registerDto.firstName,
+                null,
+                null,
+                null,
+                registerDto.email,
+                registerDto.password
+            )
         userService.createUser(internalUserDto)
 
         return userDto
