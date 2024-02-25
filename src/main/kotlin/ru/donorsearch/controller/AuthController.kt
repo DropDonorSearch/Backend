@@ -37,7 +37,7 @@ class AuthController(
         @CookieValue("token") basicToken: String,
         @RequestBody emailDto: EmailDto?
     ): StatusDto? {
-        return hackatonFeignClient.changeEmail(basicToken, emailDto)
+        return hackatonFeignClient.changeEmail("Basic $basicToken", emailDto)
     }
 
     @PostMapping("/change-password")
@@ -55,7 +55,7 @@ class AuthController(
         @CookieValue("token") basicToken: String,
         @RequestBody emailDto: ConfirmEmailDto?
     ): StatusDto? {
-        return hackatonFeignClient.confirmEmailReg(basicToken, emailDto)
+        return hackatonFeignClient.confirmEmailReg("Basic $basicToken", emailDto)
     }
 
     @PostMapping("/confirm-phone")
