@@ -73,7 +73,12 @@ class AuthController(
 
     @OptIn(ExperimentalEncodingApi::class)
     @GetMapping("/me")
-    fun getCurrentUser(@CookieValue("token") basicToken: String): FullUserDto? {
+    fun getCurrentUser(@CookieValue("token") basicToken: String?): FullUserDto? {
+
+        if (basicToken == null) {
+            return null
+        }
+
         val decodeString = String(Base64.decode(basicToken))
         val splitEd = decodeString.split(":")
 
