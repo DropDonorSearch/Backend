@@ -55,7 +55,7 @@ class AuthController(
         @CookieValue("token") basicToken: String,
         @RequestBody emailDto: ConfirmEmailDto?
     ): StatusDto? {
-        return hackatonFeignClient.confirmEmailReg("Basic $basicToken", emailDto)
+        return hackatonFeignClient.confirmEmailReg(basicToken, emailDto)
     }
 
     @PostMapping("/confirm-phone")
