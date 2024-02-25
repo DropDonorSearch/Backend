@@ -25,7 +25,7 @@ class BonusController(
     fun takeBonus(
         @RequestParam("userId") userId: Long,
         @RequestParam("bonusId") bonusId: Long
-    ): BonusDto? {
-        return bonusService.takeBonusForUser(userId, bonusId)
+    ) {
+        bonusService.takeBonusForUser(userId, bonusId)
     }
 }

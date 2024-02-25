@@ -19,43 +19,38 @@ class BonusServiceImpl(
         val userOpt = userRepository.findByExternalId(userId)
 
         if (userOpt.isPresent) {
-            return bonusMapper.getBonusDtos(userOpt.get().bonuses)
+            val test = bonusRepository.findAll()
+            userOpt.get().bonuses?.let { test.removeAll(it) }
+            return bonusMapper.getBonusDtos(test)
         }
 
         return emptyList()
     }
 
-    override fun takeBonusForUser(userId: Long, bonusId: Long): BonusDto? {
-//        val bonusOpt = userTakenBonusRepository
-//            .deleteByUserIdAndBonusId(userId, bonusId)
-//
-//        if (bonusOpt.isPresent) {
-//            val bonus = bonusOpt.get().bonus ?: return null
-//            userTakenBonusRepository.deleteByUserIdAndBonusId(userId, bonusId)
-//            return bonusMapper.getBonusDto(bonus)
-//        }
-//
+    override fun takeBonusForUser(userId: Long, bonusId: Long) {
         val userOpt = userRepository.findByExternalId(userId)
 
         if (userOpt.isPresent) {
-            val bonuses = userOpt.get().bonuses ?: return null
-            val bonusOpt = bonuses.stream().filter { it.bonusId == bonusId }?.findFirst()
 
-            if (bonusOpt == null || bonusOpt.isEmpty) {
-                return null
+            val bonusOpt = bonusRepository.findById(bonusId)
+
+            if (bonusOpt.isEmpty) {
+                return
             }
 
-            bonuses.removeIf { it.bonusId == bonusId }
-            val result = bonusMapper.getBonusDto(bonusOpt.get())
+            val bonus = bonusOpt.get()
 
-            userOpt.get().bonuses?.removeIf { it.bonusId == bonusId }
-            bonusOpt.get().users?.removeIf { it.externalId == userId }
-            userRepository.save(userOpt.get())
-            bonusRepository.save(bonusOpt.get())
+            val user = userOpt.get()
+            val bonuses = user.bonuses ?: ArrayList()
 
-            return result
+            if (bonuses.isNotEmpty()) {
+                bonuses.add(bonus)
+            } else {
+                user.bonuses = mutableListOf(bonus)
+            }
+
+            userRepository.save(user)
+            bonusRepository.save(bonus)
         }
-
-        return null
     }
 }
