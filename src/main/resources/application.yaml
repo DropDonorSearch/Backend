@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/donor_search_db
-    username: postgres
-    password: Alex1234
+    url: jdbc:postgresql://master.9a539aa4-905a-42a8-9eff-549ca5a7c36f.c.dbaas.selcloud.ru:5432/donor_search_db
+    username: alex
+    password: lqgtnCxydP2D
   jpa:
     show-sql: true
     properties:
@@ -15,8 +15,8 @@ spring:
         dialect: org.hibernate.dialect.PostgresPlusDialect
   liquibase:
     change-log: classpath:db/changelog/Changelog.xml
-    user: postgres
-    password: Alex1234
+    user: alex
+    password: lqgtnCxydP2D
   web:
     resources:
       static-locations: classpath:/media/
