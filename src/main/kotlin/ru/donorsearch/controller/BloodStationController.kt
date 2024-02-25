@@ -45,11 +45,13 @@ class BloodStationController(
         if (stations?.next != null) {
             val index = stations.next!!.indexOf("/api")
             stations.next = stations.next!!.substring(index + 4).replace("/?", "?")
+            stations.next = stations.next!!.replace("/blood_stations", "/blood-stations")
         }
 
         if (stations?.previous != null) {
             val index = stations.previous!!.indexOf("/api")
             stations.previous = stations.previous!!.substring(index + 4).replace("/?", "?")
+            stations.previous = stations.previous!!.replace("/blood_stations", "/blood-stations")
         }
 
         return stations
