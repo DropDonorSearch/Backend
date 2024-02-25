@@ -6,7 +6,7 @@ data class BloodStationsDto(
     val count: Int?,
     @JsonProperty("num_pages")
     val numPages: Int?,
-    val next: String?,
-    val previous: String?,
+    var next: String?,
+    var previous: String?,
     val results: List<BloodStationDto?>
 )

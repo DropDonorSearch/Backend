@@ -42,6 +42,16 @@ class BloodStationController(
                 openOnSunday, ordering, page, pageSize, search, withTyping, withoutRegistration, status
             )
 
+        if (stations?.next != null) {
+            val index = stations.next!!.indexOf("/api")
+            stations.next = stations.next!!.substring(index + 4).replace("/?", "?")
+        }
+
+        if (stations?.previous != null) {
+            val index = stations.previous!!.indexOf("/api")
+            stations.previous = stations.previous!!.substring(index + 4).replace("/?", "?")
+        }
+
         return stations
     }
 
