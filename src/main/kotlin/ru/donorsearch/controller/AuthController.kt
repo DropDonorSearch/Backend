@@ -66,7 +66,8 @@ class AuthController(
     @GetMapping("/me")
     fun getCurrentUser(@CookieValue("token") basicToken: String): FullUserDto? {
         val decodeString = String(Base64.decode(basicToken))
-        decodeString.split("\":\"")
+        val splitEd = decodeString.split(":")
+
         return hackatonFeignClient.getCurrentUser("Basic $basicToken")
     }
 

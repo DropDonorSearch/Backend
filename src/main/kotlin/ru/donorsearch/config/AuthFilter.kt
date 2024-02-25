@@ -36,8 +36,10 @@ class AuthFilter : OncePerRequestFilter() {
             if (requestWrapper.requestURI.contains("register")) {
                 val objectMapper = ObjectMapper()
                 val json = objectMapper.readValue(bodyString, JsonNode::class.java)
-                val username = json.get("email").toString()
-                val pass = json.get("password").toString()
+                var username = json.get("email").toString()
+                username = username.substring(1, username.length - 1)
+                var pass = json.get("password").toString()
+                pass = pass.substring(1, pass.length - 1)
                 val token: String = Base64.encode("$username:$pass".toByteArray())
 
                 logger.debug(token)
@@ -47,8 +49,10 @@ class AuthFilter : OncePerRequestFilter() {
             if (requestWrapper.requestURI.contains("login")) {
                 val objectMapper = ObjectMapper()
                 val json = objectMapper.readValue(bodyString, JsonNode::class.java)
-                val username = json.get("username").toString()
-                val pass = json.get("password").toString()
+                var username = json.get("username").toString()
+                username = username.substring(1, username.length - 1)
+                var pass = json.get("password").toString()
+                pass = pass.substring(1, pass.length - 1)
                 val token: String = Base64.encode("$username:$pass".toByteArray())
 
                 logger.debug(token)
