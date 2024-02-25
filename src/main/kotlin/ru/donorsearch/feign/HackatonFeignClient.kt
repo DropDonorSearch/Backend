@@ -14,6 +14,7 @@ import ru.donorsearch.model.dto.bloodstation.BloodStationsDto
 import ru.donorsearch.model.dto.donation.DonationDto
 import ru.donorsearch.model.dto.donation.DonationDtoWithPaging
 import ru.donorsearch.model.dto.donationplan.DonationPlanDto
+import ru.donorsearch.model.dto.donationplan.DonationPlanDtoWithPaging
 import ru.donorsearch.model.dto.event.EventsDto
 import ru.donorsearch.model.dto.region.CitiesDto
 
@@ -66,7 +67,7 @@ interface HackatonFeignClient {
         @RequestParam("page_size") pageSize: Int?,
         @RequestParam("search") search: String?,
         @RequestParam("status") status: String?
-    ): List<DonationPlanDto?>
+    ): DonationPlanDtoWithPaging?
 
     @PostMapping("/donation_plan/")
     fun createDonationPlan(

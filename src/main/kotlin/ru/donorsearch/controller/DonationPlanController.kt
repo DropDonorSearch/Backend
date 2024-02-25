@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor
 import org.springframework.web.bind.annotation.*
 import ru.donorsearch.feign.HackatonFeignClient
 import ru.donorsearch.model.dto.donationplan.DonationPlanDto
+import ru.donorsearch.model.dto.donationplan.DonationPlanDtoWithPaging
 
 @RestController
 @RequestMapping("/api/donation-plan")
@@ -21,7 +22,7 @@ class DonationPlanController(
         @RequestParam("page_size") pageSize: Int?,
         @RequestParam("search") search: String?,
         @RequestParam("status") status: String?
-    ): List<DonationPlanDto?> {
+    ): DonationPlanDtoWithPaging? {
         return hackatonFeignClient.getDonationPlans("Basic $basicToken", donateAtGte, ordering, page, pageSize, search, status)
     }
 

@@ -12,11 +12,11 @@ data class BloodStationDto(
     val city: CityDto?,
     val lat: String?,
     val lng: String?,
-    val schedule: List<ScheduleDto>?,
+    val schedule: List<ScheduleDto?>?,
     @JsonProperty("phone_numbers")
     val phoneNumbers: List<PhoneNumberDto>?,
     @JsonProperty("blood_group")
-    val bloodGroup: List<String?>,
+    val bloodGroup: List<String?>?,
     val title: String?,
     @JsonProperty("parser_url")
     val parserUrl: String?,
